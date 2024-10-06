@@ -1,0 +1,36 @@
+Date,Location,Conditions ,Temperature_F,Trappers ,Start_time,End_time,Trap_zone,Species ,Total_weight_g,Bag_weight_g,Sq_weight_g,Sex,Age,PIT_tag_number,Ear_tag_number,Fur_dye,Freeze_brand,Comments
+6-Sep-10,SLU campus,"cloudy, cool",,whole class,14:23,15:30,E,SCCA,860,,,M,Adult,,R001,right hip,right hip,slightly scortal
+6-Sep-10,SLU campus,"cloudy, cool",,whole class,14:23,15:30,F,SCCA,,,,M,Adult,,,"right hip, 2 patches",right backleg ,"missing tip of tail, slightly scortal, escaped"
+6-Sep-10,SLU campus,"cloudy, cool",,whole class,14:23,15:30,B,SCCA,800,,,M,Adult,,R002,center rump,left leg,slightly scortal
+6-Sep-10,SLU campus,"cloudy, cool",,whole class,14:23,15:30,B,SCCA,700,,,M,Adult,,R003,left leg,left middle,slightly scortal
+6-Sep-10,SLU campus,"cloudy, cool",,whole class,14:23,15:30,B,SCCA,780,,,M,Adult,,R004,left middle,right middle,slightly scortal
+8-Sep-10,,"cool, partly cloudy",65,"Erin, Hannah, Leah, Abbie",7:30,9:10,C,SCCA,950,,,F,Adult,,L005,back middle,left hip,nipples developed and large
+8-Sep-10,,"cool, partly cloudy",65,"Erin, Hannah, Leah, Abbie",7:30,9:10,C,SCCA,750,,,F,Adult,,L007,left hip,center rump,nipples not developed
+8-Sep-10,,"cool, partly cloudy",65,"Erin, Hannah, Leah, Abbie",7:30,9:10,C,SCCA,730,,,M,Adult,,L008,left hip,left hip,tiny scrotal
+8-Sep-10,,"cool, partly cloudy",65,"Erin, Hannah, Leah, Abbie",7:30,9:10,C,SCCA,710,,,M,Sub Adult,,,right middle,right shoulder,"sub adult, escaped"
+8-Sep-10,,"cool, partly cloudy",65,"Erin, Hannah, Leah, Abbie",7:30,9:10,C,SCCA,780,,,F,,,,,right hip,"esaped during freeze branding, freeze brand not sure"
+8-Sep-10,,"cool, partly cloudy",65,"Erin, Hannah, Leah, Abbie",7:30,9:10,C,SCCA,790,,,F,Adult,,L009,right hip,right leg,"nipples large, freeze brand twitched then moved up "
+10-Sep-10,Front JHS,cloudy ,70,"Andrew Skagges, Janet Sun, Eddie Richter",13:30,15:10,C,SCCA,800,,,F,Adult,,L010,LM to center rump,right hip,developed nipples 
+10-Sep-10,Front JHS,cloudy ,70,,13:30,15:10,C,SCCA,790,,,M,Adult,,R011,right hip,right leg,"caught earlier, Y2 tail"
+10-Sep-10,Front JHS,cloudy ,70,,13:30,15:10,C,SCCA,870,,,F,Adult,,,right leg,center shoulder,"developed nipples, escaped"
+10-Sep-10,Front JHS,cloudy ,70,,13:30,15:10,C,SCCA,,,,F,Adult,,L009,right leg,right hip,released
+10-Sep-10,Front JHS,cloudy ,70,,13:30,15:10,C,SCCA,710,,,M,Adult,,R012,"left hip, center rump","center middle, right hip",semi scrotal
+10-Sep-10,Front JHS,cloudy ,70,,13:30,15:10,C,SCCA,750,,,F,Adult,,L013,center shoulder,"center rump, center middle",nipples small
+1-Oct-10,SLU campus,cloudy,60,"Mathias, Lizzy, Amanda, FCB",13:30,16:00,A9,SCCA,,,,,,,R011,,,"recaptured, released"
+1-Oct-10,SLU campus,cloudy,60,"Mathias, Lizzy, Amanda, FCB",13:30,16:00,A10,SCCA,760,,,F,,,L014,left and right leg,left leg,freeze closer to left hip
+1-Oct-10,SLU campus,cloudy,60,"Mathias, Lizzy, Amanda, FCB",13:30,16:00,A11,SCCA,850,,,M,,,R015,2 center middle,"center rump, right leg",scrotal tube slip during right leg freeze
+1-Oct-10,SLU campus,cloudy,60,"Mathias, Lizzy, Amanda, FCB",13:30,16:00,C6,SCCA,800,,,M,,,,escaped,right middle,"escaped, slightly scrotal"
+1-Oct-10,SLU campus,cloudy,60,"Mathias, Lizzy, Amanda, FCB",13:30,16:00,F3,SCCA,750,,,F,,,L016,"right hip,  right shoulder","right leg, right hip",small nipples
+1-Oct-10,SLU campus,cloudy,60,"Mathias, Lizzy, Amanda, FCB",13:30,16:00,All,SCCA,870,,,M,,,R017,"left leg, left shoulder","left leg, left hip",very scrotal
+1-Oct-10,SLU campus,cloudy,60,"Mathias, Lizzy, Amanda, FCB",13:30,16:00,F5,SCCA,840,,,F,,,R018,"left middle, right middle","left hip, center rump",small nipples
+1-Oct-10,SLU campus,cloudy,60,"Mathias, Lizzy, Amanda, FCB",13:30,16:00,C6,SCCA,790,,,M,,,R019,"center rump, center middle","center rump, center middle",very scrotal
+8-Oct-10,SLU campus,"partly cloudy, breezey",65,"Jackie D, ELB, Eddie R, Jessica M",13:40,,C,SCCA,760,,,F,,possibly L14,L16,,,recapture
+8-Oct-10,SLU campus,"partly cloudy, breezey",65,"Jackie D, ELB, Eddie R, Jessica M",13:40,,C,SCCA,760,,,F,,"8/B, no 00",L,left knee,left leg,recpature
+8-Oct-10,SLU campus,"partly cloudy, breezey",65,"Jackie D, ELB, Eddie R, Jessica M",13:40,,E,SCCA,820,,,M,,,R20,right middle,"left hip, right hip",bloodied nose
+8-Oct-10,SLU campus,"partly cloudy, breezey",65,"Jackie D, ELB, Eddie R, Jessica M",13:40,,C,SCCA,740,160,,F,,,,"left leg, left hip","roght middle, right leg",escaped on ear tag
+8-Oct-10,SLU campus,"partly cloudy, breezey",65,"Jackie D, ELB, Eddie R, Jessica M",13:40,,E,SCCA,760,,,F,,"8/B, no 00",,without handling ,,
+1-Sep-11,JHS,clear,70,"Leah H, Kate A, Eddie R, Andrew S, ELB",9:00,11:30,,SCCA,850,160,690,M,,,R051,,left leg,"released, recapture from '10, probably equals R002, skin too tough for PIT tag, new ear tag"
+1-Sep-11,JHS,clear,70,"Leah H, Kate A, Eddie R, Andrew S, ELB",9:00,11:30,Java field,SCCA,800,160,640,F,Sub adult,,,"center rump, center shoulder ","right leg, right hip",escape from ear tag
+1-Sep-11,JHS,clear,70,"Leah H, Kate A, Eddie R, Andrew S, ELB",9:00,11:30,,SCCA,720,160,760,F,Adult,,L007,left hip ,center rump,"recapture from '10, nipples pro nooded"
+2-Sep-11,JHS,"clear, humid, warm",80,"ELB, Maria H, Kate A, Erin S",15:00,,,,,,,,,,,,,No squirrels 
+,,,,,,,,,,,,,,,,,,
