@@ -115,6 +115,6 @@ compensation %>%
    group_by(Grazing) %>%
    summarise(
      meanFruit = mean(Fruit),
-     sdFruit = sd(Fruit))
+     sdFruit = sd(Fruit)) 
 ```
 
