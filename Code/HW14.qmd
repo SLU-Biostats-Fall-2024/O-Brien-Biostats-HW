@@ -1,0 +1,12 @@
+---
+title: "HW-14"
+author: "S.O'Brien"
+format: html
+---
+
+## set things up
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+```
