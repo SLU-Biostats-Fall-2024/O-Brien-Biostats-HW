@@ -1,0 +1,120 @@
+---
+title: "HW15"
+author: "S.O'Brien"
+format: html
+---
+## working through chapter 3 of Getting Started with R textbook
+
+## set things up
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+```
+
+## Data
+# data is about fruit production on different rootstocks
+```{r}
+compensation <- read.csv(here("Data/compensation.csv"))
+summary(compensation)
+```
+# summary () gives min, 1st quartile,, median, mean, 3rd quartile, and max values for df
+
+# select() selects specfied column
+```{r}
+select(compensation, Fruit)
+select(compensation, -Root)
+```
+# select() with - shows all columns except variable with -
+
+## slice() gives back rows
+```{r}
+slice(compensation, 2)
+slice(compensation, 2:10)
+slice(compensation, c(2, 3, 10))
+```
+# 2:10 gives back 2nd thru 10th rows
+# c(2, 3, 10) gives back 2nd, 3rd, 10th rows
+
+## filter() edits df based on manipulation
+# with() gives back info for data on whether the command was true or fale for it
+```{r}
+with(compensation, Fruit > 80)
+```
+
+# give df where fuit > 80
+```{r}
+filter(compensation, Fruit > 80)
+```
+
+# give df where fruit > 80 or < 20
+```{r}
+filter(compensation, Fruit > 80 | Fruit < 20)
+```
+
+# save the new df
+```{r}
+lo_hi_fruit <- filter(compensation, Fruit > 80 | Fruit < 20)
+lo_hi_fruit
+```
+
+# display the first 6 rows of df
+```{r}
+head(compensation)
+```
+
+# mutate() makes new column from edited variable
+```{r}
+compensation <- mutate(compensation, logFruit = log(Fruit))
+head(compensation)
+```
+
+# arrange orders the rows of df
+```{r}
+arrange(compensation, Fruit)
+```
+# this is in increasing order
+
+# using more than one command
+# shows roots where fruit is >80
+```{r}
+select(filter(compensation, Fruit > 80), Root)
+```
+
+# piping allows land hand answer is applied to right hand function
+```{r}
+compensation %>%
+   filter(Fruit > 80) %>%
+   select(Root)
+```
+
+# show mean fruit for different grazing 
+```{r}
+summarise(
+   group_by(compensation, Grazing),
+   meanFruit = mean(Fruit))
+```
+
+# save df of mean fruit for different grazing 
+```{r}
+mean.fruit <- summarise(
+   group_by(compensation, Grazing),
+   meanFruit = mean(fruit))
+```
+
+# use piping to find means of fruit for different grazing
+```{r}
+compensation %>% 
+   group_by(Grazing) %>%
+   summarise(meanFruit = mean(Fruit))
+```
+
+# find mean and sd of fruit for different grazing
+```{r}
+compensation %>%
+   group_by(Grazing) %>%
+   summarise(
+     meanFruit = mean(Fruit),
+     sdFruit = sd(Fruit))
+```
+
