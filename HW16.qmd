@@ -1,0 +1,90 @@
+---
+title: "HW16"
+author: "S.O'Brien"
+format: html
+---
+
+## set things up
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+```
+
+## import data 
+```{r}
+cover <- read.csv(here("Data/donnerville_percent_cover.csv"))
+```
+
+## examaninig the data
+```{r}
+glimpse(cover)
+summary(cover)
+```
+
+## changing Site, Plot type and cover_type into factor variables
+```{r}
+cover$Site <- 
+  as.factor(cover$Site)
+levels(cover$Site)
+
+cover$Plot.type <- 
+  as.factor(cover$Plot.type)
+levels(cover$Plot.type)
+
+cover$cover_type <- 
+  as.factor(cover$cover_type)
+levels(cover$cover_type)
+```
+
+## make dates into date variable 
+```{r}
+cover$Date <- dmy(cover$Date)
+```
+
+## error checking: fix site factor levels
+```{r}
+fix <- which(cover$Site == "DONNERVILLE - 1")
+cover$Site[fix] <- "Donnerville 1"
+
+fix1 <- which(cover$Site == "donnerville 1")
+cover$Site[fix1] <- "Donnerville 1"
+
+fix2 <- which(cover$Site == "donnerville 2")
+cover$Site[fix2] <- "Donnerville 2"
+
+fix3 <- which(cover$Site == "donnerville-3")
+cover$Site[fix3] <- "Donnerville 3"
+
+cover$Site <- factor(cover$Site)
+```
+
+## error checking: fix cover_type factor levels
+```{r}
+fix4 <- which(cover$cover_type == "bare")
+cover$cover_type[fix4] <- "Bare"
+
+fix5 <- which(cover$cover_type == "bryophtes")
+cover$cover_type[fix5] <- "Bryophytes"
+
+fix6 <- which(cover$cover_type == "vasc ")
+cover$cover_type[fix6] <- "Vascular"
+
+cover$cover_type <- factor(cover$cover_type)
+```
+
+## Determine the average percent cover by cover type (bare, bryophytes, vascular plants) for Donnerville 1
+```{r}
+cover %>% 
+   group_by(cover_type) %>%
+   summarise(mean_cover = mean(Percent))
+```
+
+## Determine the average percent vascular plant cover across all sites.
+```{r}
+cover |> 
+  filter(cover_type == "Vascular") |>
+  group_by(Site) |>
+  summarise(mean_vasc_perc = mean(Percent))
+```
+
