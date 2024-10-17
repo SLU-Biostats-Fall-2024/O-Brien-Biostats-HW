@@ -1,0 +1,23 @@
+---
+title: "homework feedback"
+format: html
+editor: visual
+---
+
+## Homework feedback
+
+### Homework 15
+
+You don't have the compensation dataset in your Data folder (for some reason that I don't understand - perhaps line 18 isn't how you loaded the data when you did the homework?) which won't work for me on these homework projects. We're modeling a way to have an open science workflow, and that includes having the data in a place that the user can access. So I'm counting off 1 point on the homework and will do so in future if this happens again.
+
+I didn't run your code, but it looks like it should work.
+
+I like that you are adding comments about what you are doing outside of the code chunks, but you might think about whether you really want to use the `#` in front of them, as it makes the information into giant headings when you render. Consider looking at Help -\> Cheat Sheets -\> R Markdown Cheat Sheet for more information on how to format .qmd files.
+
+### Homework 16 feedback
+
+Generally looks good. Careful on lines 78 - 80 though - your answer is not filtered for just Donnerville 1 so you are getting the incorrect answer. You can see the key or just think more about it to figure out the correct method.
+
+### Homework 18 feedback
+
+Homework 18 was due on Monday, October 14. I know you missed class due to travel, but I am doing the grading on Thursday, October 17 and still don't have that homework. If you submit it by tomorrow (Friday, October 18) I will still give you credit. After that, I will not be able to give you credit. Make sure you read through that chapter on plotting basics.
