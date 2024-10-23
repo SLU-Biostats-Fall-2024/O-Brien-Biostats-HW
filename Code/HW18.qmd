@@ -1,0 +1,132 @@
+---
+title: "HW18"
+author: "S.O'Brien"
+format: html
+---
+
+Set up workspace:
+```{r}
+rm(list=ls())  
+library(tidyverse)
+library(here)
+```
+
+Read in data:
+```{r}
+compensation <- read.csv(here("Data/compensation.csv"))
+```
+
+check out data:
+```{r}
+glimpse(compensation)
+```
+
+
+Make simple bivariate scatterplot:
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) +
+  geom_point()
+```
+aes: mapping b/n variables in dataset and graph feautures
+data and aes always form first layer and geometrics plot the data
+
+Interpretation:
+positive, as root increase, fruit increases with it. two groups of grazed and ungrazed are also present. 
+
+Change background:themes
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) +
+  geom_point() +
+  theme_bw()
+```
+
+Increase size of points: size
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) +
+  geom_point(size = 5) + # place size in the geom_point layer
+  theme_bw()
+```
+
+X-axis and y-axis labels: xlab() & ylab()
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) +
+  geom_point(size = 5) + 
+  theme_bw() +
+  xlab("Root Biomass") +
+  ylab("Fruit Production")
+```
+
+Change color of points to match levels: colour = 
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit, colour = Grazing)) + # colour goes in first aes()
+  geom_point(size = 5) + 
+  theme_bw() +
+  xlab("Root Biomass") +
+  ylab("Fruit Production")
+```
+the two levels are grazed and ungrazed
+
+Change shape of points to match levels: shape = 
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit, shape = Grazing)) + # shape goes in first aes()
+  geom_point(size = 5) + 
+  theme_bw() +
+  xlab("Root Biomass") +
+  ylab("Fruit Production")
+```
+
+Boxplots:
+```{r}
+ggplot(compensation, aes(x = Grazing, y = Fruit)) +
+  geom_boxplot() + 
+  theme_bw() +
+  xlab("Grazing Treatment") +
+  ylab("Fruit Production")
+```
+
+Adding more layers to boxplot:
+```{r}
+ggplot(compensation, aes(x = Grazing, y = Fruit)) +
+  geom_boxplot() + 
+  geom_point(size = 4, colour = 'lightgrey', alpha = 0.5) +
+  theme_bw() +
+  xlab("Grazing Treatment") +
+  ylab("Fruit Production")
+```
+geom_point() adds points to plot and change color, size, and transparency of points with the layers within it
+alpha changes transparency 
+
+Histograms:
+can only have x-axis
+
+Histogram of fruit production:
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram()
+```
+must change the binwidth (how wide each bar is) or number of bins
+
+Changing number of bins:
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(bins = 10)
+```
+
+Changing binwidth:
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(binwidth = 15)
+```
+
+Facets: creates seprate graphs for each level
+
+Faceted Histograms:
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(binwidth = 15) +
+  facet_wrap(~Grazing)
+```
+
+Saving plots:
+1. Export button under Plots tab saves the plot as image or pdf that can exported
+2. ggsave: saves plot to a file; ggsave("plotname.png")

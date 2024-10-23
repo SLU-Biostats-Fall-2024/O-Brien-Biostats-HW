@@ -8,7 +8,7 @@ editor: visual
 
 The objective of this assignment is to have you continue practicing the skills you have learned in Chapters 3 and 4 of Getting Started with R and reinforce the ideas we discussed in class regarding the Weissgerber et al. paper. Please complete all of the following steps:
 
-1.  Write the code to set up your workspace.
+1. Write the code to set up your workspace.
 
 ```{r}
 rm(list=ls())  
@@ -29,8 +29,7 @@ ggplot(soil, aes(SOM_percent)) +
   geom_histogram()
 ```
 
-How would you describe the mean_SOM data based on viewing the histogram? Write your answer below:
-Based on viewing the data, I would estimate the mean_SOM to be between 5-10. 
+How would you describe the mean_SOM data based on viewing the histogram? Write your answer below: Based on viewing the data, I would estimate the mean_SOM to be between 5-10.
 
 4.  Create a new dataframe called SOM by calculating for each forest the mean soil organic matter and the standard deviation of soil organic matter. Make sure to name variables you create "mean_SOM" and "sd_SOM" so that the next code chunk I give you works.
 
@@ -73,8 +72,8 @@ The Kip tract has the largest range of percent soil matter and it shows the medi
 
 -   What do you notice that is different from how the data were displayed in the bar plot?
 
-The data in the barplot are much less informative compared to the boxplot because it doesn't show any distribution of the data. The error bars could be confused for extreme values but they are actually the standard deviation. The boxplot is easier to read and tells the reader more about the data by having the minimum, Q1, median, Q3, and maximum. 
+The data in the barplot are much less informative compared to the boxplot because it doesn't show any distribution of the data. The error bars could be confused for extreme values but they are actually the standard deviation. The boxplot is easier to read and tells the reader more about the data by having the minimum, Q1, median, Q3, and maximum.
 
 -   Which plot type is more informative? Explain your answer.
 
-The boxplot is more informative because it explains more about the data distribution in one plot compared to the barplot. Like I said in the previous question, the 5 number summary is shown which allows the reader to better understand the difference in soil organic matter for different forests.  
+The boxplot is more informative because it explains more about the data distribution in one plot compared to the barplot. Like I said in the previous question, the 5 number summary is shown which allows the reader to better understand the difference in soil organic matter for different forests.
