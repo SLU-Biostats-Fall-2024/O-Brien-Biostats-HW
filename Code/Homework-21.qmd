@@ -1,0 +1,139 @@
+---
+title: "Homework-21"
+author: "S.O'Brien"
+format: html
+---
+
+# set things up
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+```
+
+# import data 
+```{r}
+lady <- read.csv(here("Data/ladybirds.csv"))
+```
+
+# checkout data
+```{r}
+glimpse(lady)
+```
+
+# convert Habitat, Site, and colour to fctr
+```{r}
+lady$Habitat <- 
+  as.factor(lady$Habitat)
+levels(lady$Habitat)
+
+lady$Site <- 
+  as.factor(lady$Site)
+levels(lady$Site)
+
+lady$colour <- 
+  as.factor(lady$colour)
+levels(lady$colour)
+```
+
+# summarise total number for each colour and habitat
+```{r}
+totals <- lady |>
+  group_by(Habitat, colour) |>
+  summarise(total = sum(number))
+totals
+```
+
+# make bar chart of total number for each colour and habitat
+```{r}
+ggplot(totals, aes(x = Habitat, y = total, fill = colour)) +
+  geom_bar(stat = 'identity', 'position' = 'dodge')
+# fill used for bar chart to specify the colour variable
+# stat = 'identity' tells ggplot not to calculate anything
+# position = 'dodge' tells ggplot to put two bars for each habitat
+```
+counts are ratio data, not summarizing distribution
+
+# fix colors of plot to correspond to colour
+```{r}
+ggplot(totals, aes(x = Habitat, y = total, fill = colour)) +
+  geom_bar(stat = 'identity', 'position' = 'dodge') +
+  scale_fill_manual(values = c(black = "Black", red = "Red"))
+# scale_fill_manual specifies colour values with a color
+```
+
+# x2 test
+null hypothesis: colours are equally distributed among habitat
+alt hypothesis: colours aren't equally distributed among habitat
+
+#must convert totals to a matrix to run x2 test
+```{r}
+lady_mat <- xtabs(number ~ Habitat + colour, 
+                  data = lady)
+lady_mat
+```
+
+# run x2 test
+```{r}
+chisq.test(lady_mat)
+```
+reject null hypothesis, there is some association between colour and habitat. black colour more frequent in industrial habitats and red colour more frequent in rural habitat (x2 = 19.1, df = 1, p > 0.001)
+
+# save x2 test
+```{r}
+lady.chi <- chisq.test(lady_mat)
+names(lady.chi)
+```
+this makes row sumns, column sums, observed and expected values accessible
+
+# import ozone data
+```{r}
+ozone <- read.csv(here("Data/ozone.csv"))
+```
+
+# checkout data
+```{r}
+glimpse(ozone)
+```
+
+# convert Garden.location and Garden.ID to fctr
+```{r}
+ozone$Garden.ID <- 
+  as.factor(ozone$Garden.ID)
+levels(ozone$Garden.ID)
+
+ozone$Garden.location <- 
+  as.factor(ozone$Garden.location)
+levels(ozone$Garden.location)
+```
+
+# graph histogram for east and west
+```{r}
+ggplot(ozone, aes(x = Ozone)) +
+  geom_histogram(binwidth = 10) +
+  facet_wrap(~Garden.location, ncol = 1) + # creates two plots for east and west, ncol is # columns
+  theme_bw()
+```
+looks like ozone levels differ for location
+
+# calculate mean and SD of ozone levels for each location
+```{r}
+ozone |>
+  group_by(Garden.location) |>
+  summarise(mean_o = mean(Ozone),
+            SD_o = sd(Ozone))
+```
+means look different
+
+# t-test
+```{r}
+t.test(Ozone ~ Garden.location, data = ozone)
+```
+probability that the ozone levels aren't different at each location is very low because the 95% confidence interval doesn't include 0
+
+# formal test
+```{r}
+var.test(Ozone ~ Garden.location, data = ozone)
+```
+don't really need to use this ever
+

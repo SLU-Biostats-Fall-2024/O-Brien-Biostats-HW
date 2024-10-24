@@ -8,7 +8,7 @@ editor: visual
 
 The objective of this assignment is to have you continue practicing the skills you have learned in Chapters 3 and 4 of Getting Started with R and reinforce the ideas we discussed in class regarding the Weissgerber et al. paper. Please complete all of the following steps:
 
-1. Write the code to set up your workspace.
+1.  Write the code to set up your workspace.
 
 ```{r}
 rm(list=ls())  
@@ -40,6 +40,23 @@ SOM <- soil |>
             sd_SOM = sd(SOM_percent)) 
 ```
 
+Summarise Nitrogen:
+
+```{r}
+nit <- soil |> group_by(Forest) |>
+  summarise(mean_Nit = mean(Nitrate_N_ppm))
+nit # there are NAs that need to be removed
+
+nit <- soil |> group_by(Forest) |>
+  summarise(mean_Nit = mean(Nitrate_N_ppm, na.rm = T), # NAs removed w/. na.rm = T
+            sd_Nit = sd(Nitrate_N_ppm, na.rm = T))
+nit
+```
+
+If NAs show up as -9999: 
+fix_na <- which(df$nitrate = -9999) 
+df$nitrate[fix_na] <- NA
+
 5.  Now run the following code chunk which will create a bar plot of mean soil organic matter per forest, with standard deviation as error bars.
 
 ```{r}
@@ -49,6 +66,8 @@ ggplot(SOM, aes(Forest, mean_SOM))+
   ylab("Mean percent soil organic matter")+
   xlab("Forest name")
 ```
+
+the whiskers are 1.5xIQR,
 
 Based on what you see in the bar chart, how would you describe the pattern of SOM between the 4 different forests? Write your answer here:
 
