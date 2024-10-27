@@ -1,0 +1,92 @@
+---
+title: "Homework 22 - Chi-square test review"
+format: html
+editor: visual
+---
+
+Today's homework asks you to think a little more deeply about how to conduct a chi-square test of association (also called a contingency analysis or contingency table).
+
+I am providing real data from a paper that examined the effectiveness of covid vaccination status ("Fully vaccinated" and "Not vaccinated") on the frequency (i.e. count) survival vs. death ("Lived" vs. "Died") from covid in patients coming to the emergency room of a Turkish hospital.
+
+Start by setting things up
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+```
+
+Now read in the data file called `covid_vaccines.csv`. Make sure that this data file is located in the data folder of your Biostats-HW project! Assign the data to an object.
+
+```{r}
+covid <- read.csv(here("Data/covid_vaccines.csv"))
+```
+
+There are two variables in the data set that should be assigned as factor variables. Do that now.
+
+```{r}
+# checking out dataset
+glimpse(covid)
+# assigning vaccination as fctr
+covid$Vaccination_status <- 
+  as.factor(covid$Vaccination_status)
+levels(covid$Vaccination_status)
+# assigning survival as fctr
+covid$Survival <- 
+  as.factor(covid$Survival)
+levels(covid$Survival)
+```
+
+## Examine and plot the data
+
+```{r}
+glimpse(covid)
+
+ggplot(covid, aes(x = Vaccination_status, fill = Survival)) +
+  geom_bar('position' = 'dodge')
+```
+
+Now view the data set. What do you notice about it? Are there any obvious count data already created? Explain:
+
+Write your answer here. The count data for total survival for each vaccination status is automatically generated when the plot is created. It looks like there could potentially be a statistical difference of patients that survived for vaccinated and not vaccinated.
+
+Now you need to write some code to obtain the actual counts and save them in a new object called `covid_counts`. You will use the familiar `group_by` and `summarise`. However, you need to try a new trick to get counts when your dataset has no actual numbers in it. I'm going to suggest that within your `summarise` statement you create a new variable called `count`. And I'm going to ask you to see if you can figure out how to use a function called `length` to obtain count data. You may need to use the help in RStudio or google to figure out how to do this step.
+
+```{r}
+?length
+
+covid_count <- covid |>
+  group_by(Vaccination_status, Survival) |>
+  summarise(total = length(Vaccination_status)) 
+```
+
+Now make a bar plot that shows the count data using the `covid_counts` dataframe you just created. Put survival on the x-axis and fill the bars based on vaccination status. Color vaccinated patients in dark green and unvaccinated patients in black. Remove the gray background.
+
+```{r}
+ggplot(covid_count, aes(x = Survival, y = total, fill = Vaccination_status)) +
+  geom_bar(stat = 'identity', 'position' = 'dodge') +
+  scale_fill_manual(values = c("Not vaccinated" = "black", "Fully vaccinated" = "darkgreen")) +
+  theme_bw()
+
+?scale_fill_manual
+```
+
+## Conduct the Chi-square test
+
+Now use the information from Chapter 5 and Homework 21 to conduct a Chi-square test of association. Your "null hypothesis" is that there is no association between whether a patient has had a covid vaccine and their survival in the emergency room.
+
+```{r}
+covid_mat <- xtabs(total ~ Vaccination_status + Survival, 
+                  data = covid_count)
+covid_mat
+```
+
+```{r}
+chisq.test(covid_mat)
+```
+
+## Interpret the results
+
+Now write a statement or two that interprets the results of your analysis.
+
+After running the chi-sq test, we can reject the "null hypothesis" that there is no association between whether a patient has had a covid vaccine and their survival in the emergency room. Survival rate is not equally distributed between fully vaccinated and not vaccinated (x2 = 14.044, df = 1, p = 0.0001785), with fully vaccinated being more frequent in "lived" patients and not vaccinated more frequent in "died" patients.
