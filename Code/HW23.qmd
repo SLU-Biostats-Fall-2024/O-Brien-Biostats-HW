@@ -1,0 +1,84 @@
+---
+title: "HW23"
+author: "S.O'Brien"
+format: html
+---
+
+# set things up
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+```
+
+# import data
+```{r}
+growth <- read.csv(here("Data/plant.growth.rate.csv"))
+```
+
+# checkout data
+```{r}
+glimpse(growth)
+```
+
+# plot data
+```{r}
+ggplot(growth, aes(x = soil.moisture.content, y = plant.growth.rate)) +
+  geom_point() +
+  theme_bw() +
+  ylab("Plant Growth Rate (mm/week)") +
+  xlab("Soil Moisture Content")
+```
+positive slop, around 15
+intercept somewhere between 15-20mm/week
+
+# make a simple linear regression model
+null: soil moisture has no effect on plant growth
+alt: soil moisture has effect on plant growth
+```{r}
+reg_model <- lm(plant.growth.rate ~ soil.moisture.content, 
+                data = growth)
+```
+
+# ggfortify()
+```{r}
+install.packages("ggfortify")
+library(ggfortify)
+
+
+autoplot(reg_model, smooth.colour = NA)
+```
+# residual v fitted
+shows whether line is appropriate to fit data, cant have humps 
+# normal Q-Q
+evaluates normality, dots are residuals, want them on the line
+# scale-location
+evaluates assumption of equal variance, should be no pattern
+# residuals v leverage
+detects influential data points, dont want points w high influence 
+
+# smooth.colour = NA
+w/o this, includes a line of locally weighted regression that's unnecessary 
+
+# anova() tables
+```{r}
+anova(reg_model)
+```
+F = 156.08, large so error variance is small compared to explanatory variable variable
+
+# summary() table
+```{r}
+summary(reg_model)
+```
+we can reject the null hypothese (p = 2x10^-16 ), there is very strong evidence that soil moisture positively effects plant growth rate. for every increase unit in soil moisture, plant growth increases by 12.75 mm/week (y = 19.348, slope = 12.75, F = 156.08, = - 2x10^-16)
+
+# updated ggplot w regression line
+```{r}
+ggplot(growth, aes(x = soil.moisture.content, y = plant.growth.rate)) +
+  geom_point() +
+  geom_smooth(method = 'lm')
+  theme_bw() +
+  ylab("Plant Growth Rate (mm/week)") +
+  xlab("Soil Moisture Content")
+```
+this is the scatterplot but with the regression line. geom_smooth(method = 'lm') adds the regression line with the standard error as the grey shading over it
