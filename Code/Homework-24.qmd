@@ -1,0 +1,114 @@
+---
+title: "Homework 24"
+format: html
+editor: visual
+---
+
+## Overview
+
+For your homework you will implement a data analysis using a dataset on crab growth measurements.
+
+Set things up (hint: there is a new package to add with `library()`)
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+```
+
+## The data
+
+Let's pull in some data appropriate biologists: crab measurements. This dataset includes measurements of farmed crabs.
+
+```{r}
+crabs <- read.csv(here("Data/CrabAgePrediction.csv"))
+glimpse(crabs)
+```
+
+One of the variables is categorical - let's fix that in the data.
+
+```{r}
+crabs$Sex <- 
+  as.factor(crabs$Sex)
+levels(crabs$Sex)
+```
+
+## Question
+
+Is there a relationship between height and weight in female crabs?
+null hypothesis: there is no relationship between height and weight in female crabs
+alt hypothesis: there is a relationship between height and weight in female crabs
+
+1.  Extract the data for just female crabs.
+```{r}
+crabs_f <- crabs |>
+  filter(Sex == "F")
+```
+
+
+2.  Examine the response and predictor variables and use the flow chart from class to decide the appropriate statistical analysis (choose from: chi-square, 2-sample t-test or linear regression). Explain your answer here:
+predictor: height
+response: weight
+linear regression because ratio continuous variable and there is only one predictor variable
+
+3.  Work through the data analysis **following all of the steps provided in chapter 5 of your book**. You may use class notes or homework keys as a guide.
+
+Plot data:
+```{r}
+ggplot(crabs_f, aes(x = Height, y = Weight)) +
+  geom_point() +
+  theme_bw() +
+  ylab("Weight") +
+  xlab("Height")
+```
+extreme value close to 3 for height
+positive relationship from plot
+slope: 70/1 = 70
+
+simple linear regression model:
+```{r}
+crabs_model <- lm(Weight ~ Height, 
+                data = crabs_f)
+```
+
+
+ggfortify()
+```{r}
+autoplot(crabs_model, smooth.colour = NA)
+```
+# residual v fitted
+values not randomly plotted around 0 line and, suggest non-linear, and don't scatter along line randomly.
+# normal Q-Q
+values fall along line 
+# scale-location
+should be no pattern but most of the values fall in lower left area
+# residuals v leverage
+point with high influence at -25 and 0.45
+
+anova() table
+```{r}
+anova(crabs_model)
+```
+F = 613.57 so error variance is small compared to explanatory variable 
+
+summary() table
+```{r}
+summary(crabs_model)
+```
+
+conclusion:
+we can reject the null hypothesis, there is very strong evidence that height is associated with wight. (F = 613.57, p = 2.2x10^-16, df = 1).
+
+ggplot with regression line:
+```{r}
+ggplot(crabs_f, aes(x = Height, y = Weight)) +
+  geom_point() +
+  geom_smooth(method = 'lm')
+  theme_bw() +
+  ylab("Weight") +
+  xlab("Height")
+```
+regression line looks influenced by extreme value and the standard error increase as height and weight increase.
+
+## 
