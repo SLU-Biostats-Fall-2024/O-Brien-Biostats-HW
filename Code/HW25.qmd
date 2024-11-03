@@ -1,0 +1,101 @@
+---
+title: "HW25"
+author: "S.O'Brien"
+format: html
+---
+
+# set things up
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+```
+
+# 5.6 Analysis of Variance: one-way ANOVA
+explantory variable is factor or categorical, not continuous
+
+# import data
+```{r}
+daphnia <- read.csv("Data/Daphniagrowth.csv")
+```
+parasites alter growth rate?
+parasites reduce growth rate compared to control?
+
+# checkout data
+```{r}
+glimpse(daphnia)
+```
+
+# change parasite to fct
+```{r}
+daphnia$parasite <- 
+  as.factor(daphnia$parasite)
+levels(daphnia$parasite)
+```
+
+# plot data
+```{r}
+ggplot(daphnia, aes(x = parasite, y = growth.rate)) +
+  geom_boxplot() +
+  theme_bw() +
+  coord_flip() # flips x and y axis 
+```
+null hypothesis: no difference in mean growth rate between treatment
+alt hypothesis: there is a difference in mean growth rate between treatment 
+
+# anova model
+```{r}
+model_grow <- lm(growth.rate ~ parasite, data = daphnia)
+```
+
+# check assumptions 
+```{r}
+autoplot(model_grow, smooth.colour = NA)
+```
+Q-Q plot: evaluates normality of the residuals, data stays tight along line
+
+overall, assumptions look OK
+
+# interpret output: anova()
+```{r}
+anova(model_grow)
+```
+parasite treatment has effect on mean growth rate of daphnia. large F-value is from the large variance between treatment and a small p-value is from the small within-group variance. we can reject the null hypothesis that there is no difference in mean growth rate between treatment because there is a statistical difference in mean growth rate of the parasite treatments (F = 32.325, p = 2.571 x 10^-10, df = 3). 
+
+# R treatment contrasts
+```{r}
+?contr.treatment
+```
+contr.treatment is used to compare different treatment levels with the baseline level
+
+# interpret output: summary()
+```{r}
+summary(model_grow)
+```
+- R orders the treatment levels in alphabetical order with control as the 'Intercept'
+- 'Estimate' is the mean growth rate for Intercept (control) and the difference for each parasite's growth rate. 
+- e.g M. bicuspidata mean GR - control mean GR = M. bicuspidata estimate,
+0.81 - 1.21 = -0.4
+- p-value tells us whether parasite GR is significantly different than control GR
+
+# calculate mean growth rate for each treatment level
+```{r}
+sumdat <- daphnia |> 
+  group_by(parasite) |>
+  summarise(meanGR = mean(growth.rate))
+
+sumdat
+```
+control = intercept 
+0.81 - 1.21 = -0.4 (M. bicuspidata mean GR - control mean GR)
+
+# raw growth rates and mean growth rates plot
+```{r}
+ggplot(daphnia, aes(y = growth.rate, x = parasite)) + 
+  geom_point() + 
+  geom_point(sumdat, aes(x = parasite, y = meanGR)) +
+  coord_flip()
+```
+i couldn't figure out how to do the last graph, this is as far as i got after working on it for like 35 minutes. 
+
