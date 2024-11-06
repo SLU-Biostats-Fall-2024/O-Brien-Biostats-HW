@@ -1,0 +1,84 @@
+---
+title: "HW26"
+author: "S.O'Brien"
+format: html
+---
+
+# set things up
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+```
+
+# import data
+```{r}
+pea <- read.csv(here("Data/s_r_pea_sections.csv"))
+```
+
+# checkout data
+```{r}
+glimpse(pea)
+```
+
+# change Treatment to fct
+```{r}
+pea$Treatment <- 
+  as.factor(pea$Treatment)
+levels(pea$Treatment)
+```
+
+# plot data
+```{r}
+ggplot(pea, aes(x = Treatment, y = pea_section_length_ou)) +
+  geom_boxplot() +
+  theme_bw() +
+  coord_flip()
+```
+control has the longest length at around 68.5
+2% sucrose length is around -4.5 from control 
+2% glucose length is around -9.5 from control
+2% fructose length is around -10.5 from control
+1% fructose-1% glucose is around -10.5 from control 
+df = 4
+df for error = 45
+
+null hypothesis: no differences in mean length 
+alt hypothesis: there is difference in mean length
+
+# anova model
+```{r}
+# change reference level to Control w/ fct relevel
+pea$Treatment <- 
+  relevel(pea$Treatment, ref = "Control")
+levels(pea$Treatmen)
+
+model_pea <- lm(pea_section_length_ou ~ Treatment, 
+                data = pea)
+```
+
+# check assumptions
+```{r}
+autoplot(model_pea, smooth.colour = NA)
+```
+assumptions look good
+
+# interpret model
+```{r}
+anova(model_pea)
+
+summary(model_pea)
+```
+my preliminary estimates of mean difference in pea length of sugar treatment from control look pretty accurate. from the anova model, there is strong evidence that 1% fructose-1% glucose, 2% fructose, 2% glucose, and 2% sucrose all have significantly different mean pea lengths than the control. Therefore, we can reject the null hypothesis (F = 49.368, p = 6.737x10^-16, df = 4).
+
+# Tukey HSD test
+```{r}
+tukey_pea <- glht(model_pea, linfct = mcp(Treatment = "Tukey")) # tukey model 
+
+summary(tukey_pea) # shows comparison between every treatment 
+
+cld(tukey_pea) # shows compact letter display of tukey results
+```
+from the Tukey HSD test, the Control treatment has significantly different mean length compared to every sugar treatment. 2% sucrose also has significantly different mean length compared to every sugar treatment and the control. 1% fructose-1% glucose, 2% fructose, 2% glucose don't have significantly different mean pea lengths from each other but they do from the control and 2% sucrose. 
+
