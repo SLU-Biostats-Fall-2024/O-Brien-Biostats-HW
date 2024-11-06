@@ -53,7 +53,10 @@ model_grow <- lm(growth.rate ~ parasite, data = daphnia)
 ```{r}
 autoplot(model_grow, smooth.colour = NA)
 ```
+residuals v. fitted: analyzes variance
 Q-Q plot: evaluates normality of the residuals, data stays tight along line
+scale-location: tells us variances are equally distributed
+residuals v factor levels: if single point has a lot of sway
 
 overall, assumptions look OK
 
@@ -61,7 +64,7 @@ overall, assumptions look OK
 ```{r}
 anova(model_grow)
 ```
-parasite treatment has effect on mean growth rate of daphnia. large F-value is from the large variance between treatment and a small p-value is from the small within-group variance. we can reject the null hypothesis that there is no difference in mean growth rate between treatment because there is a statistical difference in mean growth rate of the parasite treatments (F = 32.325, p = 2.571 x 10^-10, df = 3). 
+parasite treatment has effect on mean growth rate of daphnia. large F-value is from the large variance between treatment and a small p-value is from the small within-group variance. we can reject the null hypothesis that there is no difference in mean growth rate between treatment because there is a statistical difference in mean growth rate of the parasite treatments (Table 1, F(3,36) = 32.325, p = 2.571 x 10^-10).                           
 
 # R treatment contrasts
 ```{r}
@@ -77,7 +80,7 @@ summary(model_grow)
 - 'Estimate' is the mean growth rate for Intercept (control) and the difference for each parasite's growth rate. 
 - e.g M. bicuspidata mean GR - control mean GR = M. bicuspidata estimate,
 0.81 - 1.21 = -0.4
-- p-value tells us whether parasite GR is significantly different than control GR
+- p-value tells us whether parasite GR is significantly different than control GR, compares treatments w/ intercept (control in this case)
 
 # calculate mean growth rate for each treatment level
 ```{r}

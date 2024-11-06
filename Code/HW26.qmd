@@ -10,6 +10,7 @@ rm(list=ls())
 library(tidyverse)
 library(here)
 library(ggfortify)
+library(multcomp)
 ```
 
 # import data
@@ -28,6 +29,9 @@ pea$Treatment <-
   as.factor(pea$Treatment)
 levels(pea$Treatment)
 ```
+
+Part 1: is there a difference 
+Part 2: what is the difference 
 
 # plot data
 ```{r}
@@ -67,6 +71,7 @@ assumptions look good
 # interpret model
 ```{r}
 anova(model_pea)
+# treatment groups appear to be statistically different from each other (F(4,45) = 49.368, p = 6.7x10^-10)
 
 summary(model_pea)
 ```
