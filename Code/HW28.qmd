@@ -1,0 +1,184 @@
+---
+title: "HW28"
+author: "S.O'Brien"
+format: html
+---
+
+### set things up
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+library(gridExtra)
+```
+
+### load in data
+
+```{r}
+df <- read.csv(here("Data/compensation.csv"))
+```
+
+### checkout data
+
+```{r}
+glimpse(df)
+summary(df)
+```
+variables are Root, Fruit, and Grazing. root and fruit are cotinuous and grazing is categorical. i will need to change grazing to a fct format
+
+### change Grazing to fct
+
+```{r}
+df$Grazing <- 
+  as.factor(df$Grazing)
+levels(df$Grazing)
+```
+
+two levels of grazing are Grazed and Ungrazed 
+
+### make scatterpot of Root and Fruit
+
+```{r}
+scatter <- ggplot(df, aes(x = Root, y = Fruit)) +
+  geom_point() +
+  theme_bw()
+
+scatter
+```
+
+### make boxer and whiskers plot
+
+```{r}
+box <- ggplot(df, aes(x = Grazing, y = Fruit)) +
+  geom_boxplot() +
+  theme_bw()
+
+box
+```
+
+### grid extra package
+
+```{r}
+# installed gridExtra package with intall.packages("gridExtra")
+# loaded in gridExtra with library(gridExtra)
+# gird.arrange places the two plots on the same page
+grid.arrange(scatter, box, nrow = 1)
+```
+
+### changing titles
+
+```{r}
+# change axis labels 
+scatter + xlab("Root Biomass") + ylab("Fruit Production")
+# add figure title
+scatter + ggtitle("MY TITLE")
+# combine axis labels and title
+scatter + labs(title = "Very Useful Title",
+               x = "Root Biomass",
+               y = "Fruit Production")
+```
+
+### set axis limits 
+
+```{r}
+scatter + xlim(0,20) + ylim(0,140)
+# this creates x axis from 0-20 and y axis from 0-140
+```
+
+### add text to plot
+
+```{r}
+# adds text into the figure
+scatter + annotate("text", x = c(6,8), y = c(105,25),
+                   label = c("Text up here", "Text down here"))
+```
+
+### adjut scale of plot
+
+```{r}
+scatter + scale_x_continuous(limits = c(4,11), breaks = 4:11)
+```
+
+### select the color for grazed and ungrazed values in scatterplot 
+
+```{r}
+# grazed will be brown, ungrazed will be green
+ggplot(df, aes(Root, Fruit, colour = Grazing)) +
+  geom_point() +
+  scale_colour_manual(values = c(Grazed = "brown", Ungrazed = "green"))
+```
+
+### transform axis to log10 and change ticks locations
+
+```{r}
+# breaks = specifies tick locations using breaks
+# trans = transforms y-axis to log10
+box +
+  scale_y_continuous(breaks = seq(from = 10, to = 150, by = 20),
+                     trans = "log10")
+
+?scale()
+```
+
+### change theme elements of figure
+
+```{r}
+# fill changes background color, colour changes data point color
+scatter +
+  theme(
+    panel.background = element_rect(fill = "blue", colour = "black"), # fill =  changes background color, colour = changes data point color
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(colour = "hotpink")) # colour = changes color of major grid lines 
+```
+
+### change color of axis title text 
+
+```{r}
+box +
+  theme(
+    axis.title.x = element_text(colour = "cornflowerblue",
+                                size = rel(2)),
+    axis.text.x = element_text(angle = 45, size = 13, vjust = 0.5))
+```
+
+### alters name of levels on figure
+
+```{r}
+box +
+  scale_x_discrete(limits = c("Ungrazed", "Grazed"),
+                   labels = c("Control", "Grazed"))
+# changes ungrazed to control 
+```
+
+### customize legend
+
+```{r}
+ggplot(df, aes(Root, Fruit, colour = Grazing)) +
+  geom_point() # this is the default legend
+
+ggplot(df, aes(Root, Fruit, colour = Grazing)) +
+  geom_point() +
+  theme(legend.key = element_rect(fill = NA)) # this gets rid of the grey box surrounding the legend
+
+ggplot(df, aes(Root, Fruit, colour = Grazing)) +
+  geom_point() +
+  theme(legend.position = "none") # this gets rid of the legend 
+
+?theme
+
+ggplot(df, aes(Root, Fruit, colour = Grazing)) +
+  geom_point() +
+  theme(legend.position = "left") # this moves legend to left side of graph
+
+# loading ggthemes packes
+library(ggthemes)
+
+# add ggthemes to figure
+ggplot(df, aes(Root, Fruit, colour = Grazing)) +
+  geom_point() +
+  theme(legend.key = element_rect(fill = NA)) +
+  theme_fivethirtyeight()
+```
+
